@@ -3,7 +3,7 @@ import 'package:places_api/places_api.dart';
 Future main() async {
   final app = Application<PlacesApiChannel>()
       ..options.configurationFilePath = "config.yaml"
-      ..options.port = 8888;
+      ..options.port = 4530;
 
   final count = Platform.numberOfProcessors ~/ 2;
   await app.start(numberOfInstances: count > 0 ? count : 1);

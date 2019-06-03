@@ -10,14 +10,13 @@ export 'package:aqueduct/aqueduct.dart';
 ///
 /// A harness for testing an aqueduct application. Example test file:
 ///
-///         void main() {
-///           Harness harness = Harness()..install();
-///
-///           test("GET /path returns 200", () async {
-///             final response = await harness.agent.get("/path");
-///             expectResponse(response, 200);
-///           });
-///         }
+        //  void main() {
+        //    Harness harness = Harness()..install();
+        //    test("GET /example returns 200", () async {
+        //      final response = await harness.agent.get("/path");
+        //      expectResponse(response, 200);
+        //    });
+        //  }
 ///
 class Harness extends TestHarness<PlacesApiChannel> {
   @override
