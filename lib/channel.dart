@@ -1,4 +1,4 @@
-import 'places_api.dart';
+import 'package:places_api/places_api.dart';
 import 'controllers/province_controller.dart';
 import 'controllers/town_controller.dart';
 
