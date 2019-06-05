@@ -8,10 +8,17 @@ class _Town {
   @primaryKey
   int id;
 
+  @Column(nullable: false)
   String name;
+
+  @Column(nullable: true)
   String longitude;
+
+  @Column(nullable: true)
   String latitude;
 
+  @Column(nullable: true)
+  BigInt population;
 
   @Relate(#towns)
   Province province;

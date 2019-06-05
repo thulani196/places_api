@@ -11,8 +11,15 @@ class _Province {
   @Column(unique: true)
   String name;
 
+  @Column(nullable: true)
   String longitude;
+  
+  @Column(nullable: true)
   String latitude;
+
+  @Column(nullable: true)
+  BigInt population;
+
 
   ManagedSet<Town> towns;
   
