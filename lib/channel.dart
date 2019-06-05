@@ -35,7 +35,7 @@ class PlacesApiChannel extends ApplicationChannel {
 
     router
       .route("/api/towns/[:id]")
-      .link(() => TownController());
+      .link(() => TownController(context));
 
     router
       .route("/api/register")
