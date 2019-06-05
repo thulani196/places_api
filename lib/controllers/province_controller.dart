@@ -23,4 +23,18 @@ class ProvinceController extends ResourceController {
     return Response.ok(res);
   }
 
+  // This function is responsible for adding a new Province to the Database and accepts a JSON body
+  @Operation.post()
+  Future<Response> addProvince(@Bind.body(ignore: ['id']) Province province) async {
+
+    final query = Query<Province>(context)
+                    ..values.name = province.name
+                    ..values.latitude = province.latitude
+                    ..values.longitude = province.longitude
+                    ..values.population = province.population;
+    
+    final insertedProvince = await query.insert();
+    return Response.ok(insertedProvince);        
+  }
+
 }
