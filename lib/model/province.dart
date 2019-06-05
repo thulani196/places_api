@@ -8,12 +8,12 @@ class _Province {
   @primaryKey
   int id;
 
-  @Column(unique: true)
+  @Column(unique: false)
   String name;
 
   @Column(nullable: true)
   String longitude;
-  
+
   @Column(nullable: true)
   String latitude;
 

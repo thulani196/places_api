@@ -21,6 +21,12 @@ class PlacesApiChannel extends ApplicationChannel {
       .route("/api/towns/[:id]")
       .link(() => TownController());
 
+    router
+      .route("/api/register")
+      .linkFunction((request) async {
+        return Response.ok({'message': 'You have reached the register endpoint'});
+      });
+
     return router;
   }
 }
