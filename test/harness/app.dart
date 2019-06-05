@@ -19,6 +19,9 @@ export 'package:aqueduct/aqueduct.dart';
         //  }
 ///
 class Harness extends TestHarness<PlacesApiChannel> {
+
+  Harness() { options.configurationFilePath = "config.yaml"; }
+  
   @override
   Future onSetUp() async {
 

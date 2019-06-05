@@ -7,20 +7,34 @@ class TownController extends ResourceController {
   TownController(this.context);
   final ManagedContext context;
 
+  @Operation.get()
+  Future<Response> getAllTowns({@Bind.query('name') String name}) async {
+
+    final query = Query<Town>(context)..join(object: (p) => p.province);
+
+    if(name != null) {
+      query.where((t) => t.name).contains(name, caseSensitive: false);
+    }
+
+    final results = await query.fetch();
+    return Response.ok(results);
+
+  }
+
   @Operation.post()
   Future<Response> createTown(@Bind.body(ignore: ['id']) Town town) async {
 
       final provinceQuery = Query<Province>(context);
       final insertQuery = Query<Town>(context);
 
-      if( provinceQuery.where((province) => province.id).equalTo(town.province.id) == null ) {
+      if( provinceQuery.where((province) => province.id).equalTo(10) == null ) {
         return Response.notFound(body: {
           "status": "Failed",
           "message": "Could not find specified Province."
         });
       }
 
-      final province = provinceQuery.where((p) => p.id).equalTo(town.province.id);
+      final province = provinceQuery.where((p) => p.id).equalTo(1);
       print("Province ${province}");
 
       // Assign Town Values from body params.
@@ -33,9 +47,6 @@ class TownController extends ResourceController {
 
       final insertedQuery = await insertQuery.insert();
       return Response.ok(insertedQuery);
-
-
-
   }
 
 }
