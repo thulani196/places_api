@@ -4,9 +4,25 @@ import 'controllers/town_controller.dart';
 
 class PlacesApiChannel extends ApplicationChannel {
 
+  ManagedContext context;
+
   @override
   Future prepare() async {
     logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+
+    final config = PlacesConfig(options.configurationFilePath.toString()); 
+    final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
+    
+    final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo(
+      config.database.username, 
+      config.database.password, 
+      config.database.host, 
+      config.database.port, 
+      config.database.databaseName
+    );
+
+    context = ManagedContext(dataModel, persistentStore);
+
   }
 
   @override
@@ -15,7 +31,7 @@ class PlacesApiChannel extends ApplicationChannel {
 
     router
       .route("/api/provinces/[:id]")
-      .link(() => ProvinceController());
+      .link(() => ProvinceController(context));
 
     router
       .route("/api/towns/[:id]")
@@ -29,4 +45,9 @@ class PlacesApiChannel extends ApplicationChannel {
 
     return router;
   }
+}
+
+class PlacesConfig extends Configuration {
+  PlacesConfig(String path): super.fromFile(File(path));
+  DatabaseConfiguration database;
 }

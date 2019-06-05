@@ -8,7 +8,7 @@ class _Town {
   @primaryKey
   int id;
 
-  @Column(nullable: false)
+  @Column(nullable: false, unique: false)
   String name;
 
   @Column(nullable: true)
@@ -18,7 +18,7 @@ class _Town {
   String latitude;
 
   @Column(nullable: true)
-  BigInt population;
+  int population;
 
   @Relate(#towns)
   Province province;

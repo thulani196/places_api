@@ -8,7 +8,7 @@ class _Province {
   @primaryKey
   int id;
 
-  @Column(unique: false)
+  @Column(unique: false, nullable: false)
   String name;
 
   @Column(nullable: true)
@@ -18,7 +18,7 @@ class _Province {
   String latitude;
 
   @Column(nullable: true)
-  BigInt population;
+  int population;
 
 
   ManagedSet<Town> towns;

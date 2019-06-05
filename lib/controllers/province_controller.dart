@@ -1,18 +1,20 @@
+
+
 import 'package:places_api/places_api.dart';
+import 'package:places_api/model/province.dart';
 
 class ProvinceController extends ResourceController {
+
+  ProvinceController(this.context);
+  final ManagedContext context;
 
   @Operation.get()
   Future<Response> getAllProvinces() async {
 
-    var provinces = [
-        {"id": 1, "name": "Lusaka"},
-        {"id": 2, "name": "Central Province"},
-        {"id": 3, "name": "Southern Province"},
-        {"id": 4, "name": "Western Province"}
-    ];
+    final query = Query<Province>(context);
+    final res = await query.fetch();
 
-    return Response.ok(provinces);
+    return Response.ok(res);
 
   }
 
