@@ -65,7 +65,7 @@ class ProvinceController extends ResourceController {
 
   @Operation.put()
   Future<Response> updateProvince(@Bind.body() Province province) async {
-    
+  
     final updateQuery = Query<Province>(context)
                             ..values.name = province.name
                             ..values.longitude = province.longitude
@@ -73,7 +73,7 @@ class ProvinceController extends ResourceController {
                             ..values.population = province.population
                         ..where((province) => province.id).equalTo(province.id);
     final executeUpdate = await updateQuery.updateOne();
-    
+
     return Response.ok(executeUpdate);
                         
   }
