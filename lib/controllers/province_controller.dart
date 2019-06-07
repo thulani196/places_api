@@ -1,5 +1,6 @@
 
 
+import 'package:aqueduct/aqueduct.dart';
 import 'package:places_api/places_api.dart';
 import 'package:places_api/model/province.dart';
 
@@ -44,17 +45,37 @@ class ProvinceController extends ResourceController {
     final provinceDeleted = await query.delete();
 
     if(provinceDeleted > 0) {
+
       return Response.ok({
          "status": "success",
          "message": "${provinceDeleted} record(s) successfully removed." 
       });
+
     } else if(provinceDeleted < 1) {
+
       return Response.notFound(body: {
         "status":"Failed",
         "message": "Could not find province with id ${id}."
       });
+
     }
 
     return Response.noContent();
   }
+
+  @Operation.put()
+  Future<Response> updateProvince(@Bind.body() Province province) async {
+    
+    final updateQuery = Query<Province>(context)
+                            ..values.name = province.name
+                            ..values.longitude = province.longitude
+                            ..values.latitude = province.latitude
+                            ..values.population = province.population
+                        ..where((province) => province.id).equalTo(province.id);
+    final executeUpdate = await updateQuery.updateOne();
+    
+    return Response.ok(executeUpdate);
+                        
+  }
+
 }
