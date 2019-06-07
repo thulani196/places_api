@@ -37,4 +37,24 @@ class ProvinceController extends ResourceController {
     return Response.ok(insertedProvince);        
   }
 
+  @Operation.delete()
+  Future<Response> deleteProvince(@Bind.query('id') int id) async {
+    final query = Query<Province>(context)
+                    ..where((province) => province.id).equalTo(id);
+    final provinceDeleted = await query.delete();
+
+    if(provinceDeleted > 0) {
+      return Response.ok({
+         "status": "success",
+         "message": "${provinceDeleted} record(s) successfully removed." 
+      });
+    } else if(provinceDeleted < 1) {
+      return Response.notFound(body: {
+        "status":"Failed",
+        "message": "Could not find province with id ${id}."
+      });
+    }
+
+    return Response.noContent();
+  }
 }
