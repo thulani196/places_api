@@ -17,7 +17,7 @@ class _Province {
   @Column(nullable: true)
   String latitude;
 
-  @Column(nullable: true)
+  @Column(nullable: false)
   int population;
 
   ManagedSet<Town> towns;

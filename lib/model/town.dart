@@ -17,7 +17,7 @@ class _Town {
   @Column(nullable: true)
   String latitude;
 
-  @Column(nullable: true)
+  @Column(nullable: false)
   int population;
 
   @Relate(#towns)
