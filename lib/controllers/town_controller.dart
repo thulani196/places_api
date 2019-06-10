@@ -7,9 +7,23 @@ class TownController extends ResourceController {
   TownController(this.context);
   final ManagedContext context;
 
+  @Operation.get('id')
+  Future<Response> getById({@Bind.query('id') int id}) async {
+    final query = Query<Town>(context)..where((town) => town.id).equalTo(id);
+    final result = await query.fetchOne();
+
+    if(result == null) {
+      return Response.notFound(body: {
+        "status": "Failed",
+        "message": "Could not find Town with id: ${id}"
+      });
+    }
+
+    return Response.ok(result);
+  }
+
   @Operation.get()
   Future<Response> getAllTowns({@Bind.query('name') String name}) async {
-
     final query = Query<Town>(context)..join(object: (p) => p.province);
 
     if(name != null) {
@@ -45,6 +59,30 @@ class TownController extends ResourceController {
 
       final insertedQuery = await insertQuery.insert();
       return Response.ok(insertedQuery);
+  } 
+
+  @Operation.delete('id')
+  Future<Response> deleteById(@Bind.query('id') int id) async {
+    final record = Query<Town>(context)..where((t) => t.id).equalTo(id);
+    final toDelete = await record.delete();
+
+    if(toDelete > 0) {
+
+      return Response.ok({
+         "status": "success",
+         "message": "${toDelete} record(s) successfully removed." 
+      });
+
+    } else if(toDelete < 1) {
+
+      return Response.notFound(body: {
+        "status":"Failed",
+        "message": "Could not find town with id ${id}."
+      });
+
+    }
+
+    return Response.noContent();
   }
 
 }
