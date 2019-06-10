@@ -93,11 +93,12 @@ class TownController extends ResourceController {
                               ..values.longitude = town.longitude
                               ..values.latitude = town.latitude
                               ..values.population = town.population
-                              ..values.province.id = town.province.id;
+                              ..values.province.id = town.province.id
+                        ..where((t) => t.id).equalTo(town.id);
 
     final executeUpdate = await updateQuery.updateOne();
     return Response.ok(executeUpdate);
-
+    
   }
 
 }
