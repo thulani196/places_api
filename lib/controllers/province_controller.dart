@@ -88,6 +88,7 @@ class ProvinceController extends ResourceController {
                             ..values.population = province.population
                         ..where((province) => province.id).equalTo(province.id);
     final executeUpdate = await updateQuery.updateOne();
+    
     return Response.ok(executeUpdate);
                         
   }

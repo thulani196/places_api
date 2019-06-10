@@ -85,4 +85,19 @@ class TownController extends ResourceController {
     return Response.noContent();
   }
 
+  @Operation.put()
+  Future<Response> update(@Bind.body() Town town) async {
+
+    final updateQuery = Query<Town>(context)
+                              ..values.name = town.name
+                              ..values.longitude = town.longitude
+                              ..values.latitude = town.latitude
+                              ..values.population = town.population
+                              ..values.province.id = town.province.id;
+
+    final executeUpdate = await updateQuery.updateOne();
+    return Response.ok(executeUpdate);
+
+  }
+
 }
