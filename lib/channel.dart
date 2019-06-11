@@ -41,10 +41,12 @@ class PlacesApiChannel extends ApplicationChannel {
 
     router
       .route("/api/provinces/[:id]")
+      .link(() => Authorizer.bearer(authServer))
       .link(() => ProvinceController(context));
 
     router
       .route("/api/towns/[:id]")
+      .link(() => Authorizer.bearer(authServer))
       .link(() => TownController(context));
 
     router
