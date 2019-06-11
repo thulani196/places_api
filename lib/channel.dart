@@ -1,10 +1,14 @@
+import 'package:aqueduct/managed_auth.dart';
 import 'package:places_api/places_api.dart';
 import 'controllers/province_controller.dart';
+import 'controllers/register_controller.dart';
 import 'controllers/town_controller.dart';
+import 'model/user.dart';
 
 class PlacesApiChannel extends ApplicationChannel {
 
   ManagedContext context;
+  AuthServer authServer;
 
   @override
   Future prepare() async {
@@ -23,11 +27,17 @@ class PlacesApiChannel extends ApplicationChannel {
 
     context = ManagedContext(dataModel, persistentStore);
 
+    final authStorage = ManagedAuthDelegate<User>(context);
+    authServer = AuthServer(authStorage);
   }
 
   @override
   Controller get entryPoint {
     final router = Router();
+
+    router
+      .route("/api/token")
+      .link(() => AuthController(authServer));
 
     router
       .route("/api/provinces/[:id]")
@@ -39,9 +49,7 @@ class PlacesApiChannel extends ApplicationChannel {
 
     router
       .route("/api/register")
-      .linkFunction((request) async {
-        return Response.ok({'message': 'You have reached the register endpoint'});
-      });
+      .link(() => RegisterController(context, authServer));
 
     return router;
   }
