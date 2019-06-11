@@ -1,0 +1,7 @@
+database:
+  host: localhost
+  port: 5432
+  username: postgres
+  password: password100%
+  databaseName: places_test
+  isTemporary: true
